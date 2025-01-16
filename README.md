@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/GuccioGucci/contented/blob/main/contented.svg?raw=true" width="250"/>
+  <img src="https://github.com/iliocatallo/supposedly/blob/main/supposedly.svg?raw=true" width="250"/>
 </div>
 
 <p align="center">
@@ -7,9 +7,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@gucciogucci/contented"><img alt="NPM" src="https://badge.fury.io/js/@gucciogucci%2Fcontented.svg"/></a>
-  <a href="https://github.com/GuccioGucci/contented/actions/workflows/test.yml"><img alt="Test" src="https://github.com/GuccioGucci/contented/actions/workflows/test.yml/badge.svg"></a>
-  <a href="https://bundlephobia.com/package/@gucciogucci/contented"><img alt="Bundlephobia Minified" src="https://img.shields.io/bundlephobia/min/@gucciogucci/contented.svg"></a>
+  <a href="https://www.npmjs.com/package/supposedly"><img alt="NPM" src="https://badge.fury.io/js/supposedly.svg"/></a>
+  <a href="https://github.com/iliocatallo/supposedly/actions/workflows/test.yml"><img alt="Test" src="https://github.com/iliocatallo/supposedly/actions/workflows/test.yml/badge.svg"></a>
+  <a href="https://bundlephobia.com/package/@gucciogucci/supposedly"><img alt="Bundlephobia Minified" src="https://img.shields.io/bundlephobia/min/@gucciogucci/supposedly.svg"></a>
 </p>
 
 ## Table of Contents
@@ -34,14 +34,13 @@
     - [`allOf(T1, T2, ...Ts)`](#alloft1-t2-ts)
   - [Utility types](#utility-types)
     - [`Infer`](#infer)
-- [License](#license)
 
 ## Introduction
 
-Contented is a TypeScript library for performing type coercion at run-time. To this end, Contented introduces run-time representations of primitive types, such as `string`, which can be then mixed and matched to describe compound types.
+Supposedly is a TypeScript library for performing type coercion at run-time. To this end, Supposedly introduces run-time representations of primitive types, such as `string`, which can be then mixed and matched to describe compound types.
 
 ```typescript
-import { string, number, object } from '@gucciogucci/contented';
+import { string, number, object } from 'supposedly';
 
 const Image = object({
   url: string,
@@ -49,7 +48,7 @@ const Image = object({
 });
 ```
 
-Contented may be useful every time there are expectations — but no real guarantees, on the shape of data acquired at run-time. Common use cases include processing data coming over the wire, from files, or any other external source.
+Supposedly may be useful every time there are expectations — but no real guarantees, on the shape of data acquired at run-time. Common use cases include processing data coming over the wire, from files, or any other external source.
 
 ## Reference
 
@@ -60,7 +59,7 @@ Contented may be useful every time there are expectations — but no real guaran
 A type-guard that returns `true` if `input` is evaluated to be a `T`, and `false` otherwise.
 
 ```typescript
-import { number, object, isValid } from '@gucciogucci/contented';
+import { number, object, isValid } from 'supposedly';
 
 const Point = object({
   x: number,
@@ -77,7 +76,7 @@ if (isValid(Point, input)) {
 Explains why `input` cannot be coerced to `T`. It returns `undefined` if no explanation is needed, that is, if `input` is in fact a `T`.
 
 ```typescript
-import { number, object, explain } from '@gucciogucci/contented';
+import { number, object, explain } from 'supposedly';
 
 const Point = object({
   x: number,
@@ -114,7 +113,7 @@ explain(Point, { x: 10, y : 20 });
 A run-time representation of the `string` type.
 
 ```typescript
-import { string, isValid, explain } from '@gucciogucci/contented';
+import { string, isValid, explain } from 'supposedly';
 
 isValid(string, 'hello');
 // true
@@ -128,7 +127,7 @@ explain(string, 42);
 A run-time representation of the `number` type.
 
 ```typescript
-import { number, isValid, explain } from '@gucciogucci/contented';
+import { number, isValid, explain } from 'supposedly';
 
 isValid(number, 42);
 // true
@@ -142,7 +141,7 @@ explain(number, 'hello');
 A run-time representation of the `bigint` type.
 
 ```typescript
-import { bigint, isValid, explain } from '@gucciogucci/contented';
+import { bigint, isValid, explain } from 'supposedly';
 
 isValid(bigint, 1024n);
 // true
@@ -156,7 +155,7 @@ explain(bigint, 'hello');
 A run-time representation of the `boolean` type.
 
 ```typescript
-import { boolean, isValid, explain } from '@gucciogucci/contented';
+import { boolean, isValid, explain } from 'supposedly';
 
 isValid(boolean, false);
 // true
@@ -170,7 +169,7 @@ explain(boolean, 'hello');
 A run-time representation of the `null` type. The trailing underscore is to avoid shadowing the built-in `null` value.
 
 ```typescript
-import { null_, isValid, explain } from '@gucciogucci/contented';
+import { null_, isValid, explain } from 'supposedly';
 
 isValid(null_, null);
 // true
@@ -186,7 +185,7 @@ explain(null_, 'hello');
 A run-time representation of the narrowest type that can be constructed from `value`. Hence, coercions to `literal(value)` succeed only when `value` is provided as an input.
 
 ```typescript
-import { literal, isValid, explain } from '@gucciogucci/contented';
+import { literal, isValid, explain } from 'supposedly';
 
 isValid(literal('hello'), 'hello');
 // true
@@ -202,7 +201,7 @@ explain(literal('hello'), 'foo');
 A run-time representation of an object.
 
 ```typescript
-import { number, object, isValid, explain } from '@gucciogucci/contented';
+import { number, object, isValid, explain } from 'supposedly';
 
 const Point = object({ x: number, y: number });
 
@@ -221,7 +220,7 @@ explain(Point, { x: 10 });
 As with compile-time types, optional properties are marked by adding a `?` at the end of their names:
 
 ```typescript
-import { number, object, isValid } from '@gucciogucci/contented';
+import { number, object, isValid } from 'supposedly';
 
 const Point = object({ x: number, y: number, 'z?': number })
 
@@ -240,7 +239,7 @@ isValid(Point, { x: 10, y: 20, z: undefined });
 A run-time representation of an array of `T`s, where `T` denotes the run-time representation of its element type.
 
 ```typescript
-import { number, arrayOf, isValid, explain } from '@gucciogucci/contented';
+import { number, arrayOf, isValid, explain } from 'supposedly';
 
 isValid(arrayOf(number), [ 3, 4, 5 ]);
 // true
@@ -262,7 +261,7 @@ explain(arrayOf(number), [ 3, 'a', 5 ]);
 A run-time representation of the union type `T1 | T2 | ...Ts`.
 
 ```typescript
-import { oneOf, literal, isValid, explain } from '@gucciogucci/contented';
+import { oneOf, literal, isValid, explain } from 'supposedly';
 
 const abc = oneOf(literal('a'), literal('b'), literal('c'));
 
@@ -287,7 +286,7 @@ explain(abc, 'd');
 A run-time representation of the intersection type `T1 & T2 & ...Ts`.
 
 ```typescript
-import { allOf, object, number, isValid, explain } from '@gucciogucci/contented';
+import { allOf, object, number, isValid, explain } from 'supposedly';
 
 const abObject = allOf(object({ a: number }), object({ b: number }));
 
@@ -314,7 +313,7 @@ explain(abObject, { a: 10 });
 `Infer` comes in handy every time it is necessary to infer the compile-time type corresponding to some run-time representation `T`.
 
 ```typescript
-import { Infer, string, object } from '@gucciogucci/contented';
+import { Infer, string, object } from 'supposedly';
 
 const User = object({
   name: string,
@@ -326,9 +325,3 @@ function fn(user: Infer<typeof User>) {
   // here, user: { name: string; surname: string; contacts: { phone: string } }
 }
 ```
-
-## License
-
-Copyright 2024 Gucci.
-
-Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)
