@@ -9,7 +9,7 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/supposedly"><img alt="NPM" src="https://badge.fury.io/js/supposedly.svg"/></a>
   <a href="https://github.com/iliocatallo/supposedly/actions/workflows/test.yml"><img alt="Test" src="https://github.com/iliocatallo/supposedly/actions/workflows/test.yml/badge.svg"></a>
-  <a href="https://bundlephobia.com/package/@gucciogucci/supposedly"><img alt="Bundlephobia Minified" src="https://img.shields.io/bundlephobia/min/@gucciogucci/supposedly.svg"></a>
+  <a href="https://bundlephobia.com/package/supposedly"><img alt="Bundlephobia Minified" src="https://img.shields.io/bundlephobia/min/supposedly.svg"></a>
 </p>
 
 ## Table of Contents
