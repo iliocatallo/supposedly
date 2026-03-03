@@ -1,5 +1,5 @@
-import { test } from 'uvu'
-import assert from 'uvu/assert'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 import { isValid } from './isValid'
 import { explain } from './explain'
 import { number } from './number'
@@ -13,7 +13,7 @@ test(`array accepts array of the indicated element type`, function () {
 
   const res = isValid(arrayOfStrings, ['a', 'b', 'c'])
 
-  assert.is(res, true)
+  assert.equal(res, true)
 })
 
 test(`array rejects values that are not arrays`, function () {
@@ -21,14 +21,14 @@ test(`array rejects values that are not arrays`, function () {
 
   const res = isValid(arrayOfStrings, 5)
 
-  assert.is(res, false)
+  assert.equal(res, false)
 })
 
 test(`there is an explanation if the value is not an array`, function () {
   const arrayOfStrings = arrayOf(string)
 
   const exp = explain(arrayOfStrings, 5)
-  assert.equal(exp, {
+  assert.deepEqual(exp, {
     value: 5,
     isNot: { arrayOf: 'string' },
   })
@@ -39,14 +39,14 @@ test(`array rejects arrays of the wrong element type`, function () {
 
   const res = isValid(arrayOfStrings, [1, 2, 3])
 
-  assert.is(res, false)
+  assert.equal(res, false)
 })
 
 test(`there is an explanation if elements are of the wrong type`, function () {
   const arrayOfStrings = arrayOf(string)
 
   const exp = explain(arrayOfStrings, [1, 2, 3])
-  assert.equal(exp, {
+  assert.deepEqual(exp, {
     value: [1, 2, 3],
     isNot: { arrayOf: 'string' },
     since: [
@@ -62,7 +62,7 @@ test(`array reports nested errors`, function () {
 
   const res = isValid(arrayOfObjs, [{ a: 5 }])
 
-  assert.is(res, false)
+  assert.equal(res, false)
 })
 
 test(`there is an explanation for the presence of nested errors`, function () {
@@ -70,7 +70,7 @@ test(`there is an explanation for the presence of nested errors`, function () {
 
   const exp = explain(arrayOfObjs, [{ a: 5 }])
 
-  assert.equal(exp, {
+  assert.deepEqual(exp, {
     value: [{ a: 5 }],
     isNot: { arrayOf: { object: { a: 'string' } } },
     since: [
@@ -95,14 +95,14 @@ test(`array rejects a value upon the first missing element`, function () {
 
   const res = isValid(arrayOfObjs, [{ b: 0 }, { b: 1 }, { b: 2 }])
 
-  assert.is(res, false)
+  assert.equal(res, false)
 })
 
 test(`there is an explanation when there are missing elements`, function () {
   const arrayOfObjs = arrayOf(object({ a: string }))
 
   const exp = explain(arrayOfObjs, [{ b: 0 }, { b: 1 }, { b: 2 }])
-  assert.equal(exp, {
+  assert.deepEqual(exp, {
     value: [{ b: 0 }, { b: 1 }, { b: 2 }],
     isNot: { arrayOf: { object: { a: 'string' } } },
     since: [
@@ -135,9 +135,7 @@ test(`array accepts alternatives`, function () {
   const res2 = isValid(arrayOfAlternatives, ['x', 'y', false])
   const res3 = isValid(arrayOfAlternatives, ['x', 'y', { a: 'hello' }])
 
-  assert.is(res1, true)
-  assert.is(res2, false)
-  assert.is(res3, false)
+  assert.equal(res1, true)
+  assert.equal(res2, false)
+  assert.equal(res3, false)
 })
-
-test.run()

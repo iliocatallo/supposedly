@@ -1,5 +1,5 @@
-import { test } from 'uvu'
-import { is, equal } from 'uvu/assert'
+import { test } from 'node:test'
+import { equal, deepEqual } from 'node:assert/strict'
 import fc, { assert, property } from 'fast-check'
 import { bigint } from './bigint'
 import { isValid } from './isValid'
@@ -9,7 +9,7 @@ test(`bigint accepts bigint values`, function () {
   assert(
     property(fc.bigInt(), (value) => {
       const res = isValid(bigint, value)
-      is(res, true)
+      equal(res, true)
     })
   )
 })
@@ -18,7 +18,7 @@ test(`bigint rejects all but bigint values`, function () {
   assert(
     property(notABigint, (value) => {
       const res = isValid(bigint, value)
-      is(res, false)
+      equal(res, false)
     })
   )
 })
@@ -27,7 +27,7 @@ test(`there is an explanation why a value is not a bigint`, function () {
   assert(
     property(notABigint, (value) => {
       const exp = explain(bigint, value)
-      equal(exp, {
+      deepEqual(exp, {
         value,
         isNot: 'bigint',
       })
@@ -39,12 +39,10 @@ test(`there is no need for an explanation if the value is indeed a bigint`, func
   assert(
     property(fc.bigInt(), (value) => {
       const exp = explain(bigint, value)
-      is(exp, undefined)
+      equal(exp, undefined)
     })
   )
 })
-
-test.run()
 
 const fcSymbol = fc.string().map((str) => Symbol(str))
 const fcNumber = fc.oneof(fc.integer(), fc.float(), fc.double())

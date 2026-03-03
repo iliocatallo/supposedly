@@ -1,5 +1,5 @@
-import { test } from 'uvu'
-import { is, equal } from 'uvu/assert'
+import { test } from 'node:test'
+import { equal, deepEqual } from 'node:assert/strict'
 import fc, { assert, property } from 'fast-check'
 import { number } from './number'
 import { isValid } from './isValid'
@@ -9,7 +9,7 @@ test(`number accepts number values`, function () {
   assert(
     property(fcNumber, (value) => {
       const res = isValid(number, value)
-      is(res, true)
+      equal(res, true)
     })
   )
 })
@@ -18,7 +18,7 @@ test('number rejects all but number values', function () {
   assert(
     property(notANumber, (value) => {
       const res = isValid(number, value)
-      is(res, false)
+      equal(res, false)
     })
   )
 })
@@ -27,7 +27,7 @@ test(`there is an explanation why a value is not a number`, function () {
   assert(
     property(notANumber, (value) => {
       const exp = explain(number, value)
-      equal(exp, {
+      deepEqual(exp, {
         value,
         isNot: 'number',
       })
@@ -39,12 +39,10 @@ test(`there is no need for an explanation if the value is indeed a number`, func
   assert(
     property(fcNumber, (value) => {
       const exp = explain(number, value)
-      is(exp, undefined)
+      equal(exp, undefined)
     })
   )
 })
-
-test.run()
 
 const fcSymbol = fc.string().map((str) => Symbol(str))
 const fcNumber = fc.oneof(fc.integer(), fc.float(), fc.double()).filter((x) => !Number.isNaN(x))

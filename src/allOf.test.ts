@@ -1,5 +1,5 @@
-import { test } from 'uvu'
-import assert from 'uvu/assert'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 import { object } from './object'
 import { number } from './number'
 import { isValid } from './isValid'
@@ -12,8 +12,8 @@ test(`allOf allows specifying intersections`, function () {
   const res1 = isValid(T, { a: 10, b: 20 })
   const res2 = isValid(T, { a: 10, b: 20, c: 30 })
 
-  assert.is(res1, true)
-  assert.is(res2, true)
+  assert.equal(res1, true)
+  assert.equal(res2, true)
 })
 
 test('allOf rejects input values that are not coercible to all given types', function () {
@@ -24,10 +24,10 @@ test('allOf rejects input values that are not coercible to all given types', fun
   const res3 = isValid(T, { c: 30 })
   const res4 = isValid(T, 'hello')
 
-  assert.is(res1, false)
-  assert.is(res2, false)
-  assert.is(res3, false)
-  assert.is(res4, false)
+  assert.equal(res1, false)
+  assert.equal(res2, false)
+  assert.equal(res3, false)
+  assert.equal(res4, false)
 })
 
 test(`there is an explanation if the input value is not coercibile to any given type`, function () {
@@ -36,7 +36,7 @@ test(`there is an explanation if the input value is not coercibile to any given 
   const exp1 = explain(T, { a: 10 })
   const exp2 = explain(T, { c: 30 })
 
-  assert.equal(exp1, {
+  assert.deepEqual(exp1, {
     value: { a: 10 },
     isNot: { allOf: [{ object: { a: 'number' } }, { object: { b: 'number' } }] },
     since: [
@@ -48,7 +48,7 @@ test(`there is an explanation if the input value is not coercibile to any given 
     ],
   })
 
-  assert.equal(exp2, {
+  assert.deepEqual(exp2, {
     value: { c: 30 },
     isNot: { allOf: [{ object: { a: 'number' } }, { object: { b: 'number' } }] },
     since: [
@@ -65,5 +65,3 @@ test(`there is an explanation if the input value is not coercibile to any given 
     ],
   })
 })
-
-test.run()

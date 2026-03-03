@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "pretest": "npm run ts:check",
-    "test": "c8 --reporter=lcov --reporter=text --include=src uvu -r tsm src .test.ts",
+    "test": "c8 node -r tsm --test src/**.test.ts",
     "build": "tsc --build tsconfig.build.json",
     "ts:check": "tsc --noEmit",
     "prepare": "husky install",
@@ -38,14 +38,13 @@
   "homepage": "https://github.com/iliocatallo/supposedly#readme",
   "devDependencies": {
     "@types/node": "^18.18.8",
-    "c8": "^8.0.1",
+    "c8": "^11.0.0",
     "fast-check": "^3.13.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.3",
     "tsm": "^2.3.0",
-    "typescript": "^5.2.2",
-    "uvu": "^0.5.6"
+    "typescript": "^5.2.2"
   },
   "lint-staged": {
     "*.{ts,css,md}": "prettier --write"

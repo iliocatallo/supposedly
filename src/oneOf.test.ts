@@ -1,5 +1,5 @@
-import { test } from 'uvu'
-import assert from 'uvu/assert'
+import { test } from 'node:test'
+import assert from 'node:assert/strict'
 import { number } from './number'
 import { string } from './string'
 import { oneOf } from './oneOf'
@@ -16,9 +16,9 @@ test(`oneOf allows specifying alternatives`, function () {
   const res2 = isValid(T, { b: 15 })
   const res3 = isValid(T, false)
 
-  assert.is(res1, true)
-  assert.is(res2, true)
-  assert.is(res3, true)
+  assert.equal(res1, true)
+  assert.equal(res2, true)
+  assert.equal(res3, true)
 })
 
 test(`oneOf rejects input values that are not coercible to any given alternative`, function () {
@@ -27,8 +27,8 @@ test(`oneOf rejects input values that are not coercible to any given alternative
   const res1 = isValid(T, true)
   const res2 = isValid(T, { a: 2 })
 
-  assert.is(res1, false)
-  assert.is(res2, false)
+  assert.equal(res1, false)
+  assert.equal(res2, false)
 })
 
 test(`there is an explanation if the input value is not coercible to any given alternative`, function () {
@@ -37,7 +37,7 @@ test(`there is an explanation if the input value is not coercible to any given a
   const exp1 = explain(T, true)
   const exp2 = explain(T, { a: 2 })
 
-  assert.equal(exp1, {
+  assert.deepEqual(exp1, {
     value: true,
     isNot: { oneOf: [{ literal: 'a' }, { literal: 'b' }, { literal: 'c' }] },
     since: [
@@ -46,7 +46,7 @@ test(`there is an explanation if the input value is not coercible to any given a
       { value: true, isNot: { literal: 'c' } },
     ],
   })
-  assert.equal(exp2, {
+  assert.deepEqual(exp2, {
     value: { a: 2 },
     isNot: { oneOf: [{ literal: 'a' }, { literal: 'b' }, { literal: 'c' }] },
     since: [
@@ -63,7 +63,7 @@ test(`the explanation mentions the path at which the error happened`, function (
   const exp1 = explain(stringOrNumberAtA, { b: 12 })
   const exp2 = explain(stringOrNumberAtA, { a: 'hello' })
 
-  assert.equal(exp1, {
+  assert.deepEqual(exp1, {
     value: { b: 12 },
     isNot: { oneOf: ['string', { object: { a: 'number' } }] },
     since: [
@@ -78,7 +78,7 @@ test(`the explanation mentions the path at which the error happened`, function (
       },
     ],
   })
-  assert.equal(exp2, {
+  assert.deepEqual(exp2, {
     value: { a: 'hello' },
     isNot: { oneOf: ['string', { object: { a: 'number' } }] },
     since: [
@@ -101,8 +101,8 @@ test(`oneOf reports multi-level missing keys`, function () {
   const res1 = isValid(T, { b: 12 })
   const res2 = isValid(T, { a: { c: 12 } })
 
-  assert.is(res1, false)
-  assert.is(res2, false)
+  assert.equal(res1, false)
+  assert.equal(res2, false)
 })
 
 test(`there is an explanation in case of multi-level missing keys`, function () {
@@ -111,12 +111,12 @@ test(`there is an explanation in case of multi-level missing keys`, function () 
   const exp1 = explain(T, { b: 12 })
   const exp2 = explain(T, { a: { c: 12 } })
 
-  assert.equal(exp1, {
+  assert.deepEqual(exp1, {
     value: { b: 12 },
     isNot: { object: { a: { oneOf: ['string', { object: { b: 'number' } }] } } },
     since: [{ missingKey: 'a' }],
   })
-  assert.equal(exp2, {
+  assert.deepEqual(exp2, {
     value: { a: { c: 12 } },
     isNot: { object: { a: { oneOf: ['string', { object: { b: 'number' } }] } } },
     since: [
@@ -139,5 +139,3 @@ test(`there is an explanation in case of multi-level missing keys`, function () 
     ],
   })
 })
-
-test.run()
