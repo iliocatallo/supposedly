@@ -10,10 +10,9 @@
     "/dist"
   ],
   "scripts": {
-    "pretest": "npm run ts:check",
+    "pretest": "tsc --noEmit",
     "test": "c8 tsx --test src/**.test.ts",
     "build": "tsc --build tsconfig.build.json",
-    "ts:check": "tsc --noEmit",
     "prepare": "husky install",
     "dep:upgrade:major": "npx npm-check-updates -u",
     "dep:upgrade:minor": "npm run dep:upgrade:major -- --target minor"
