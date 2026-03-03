@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "pretest": "npm run ts:check",
-    "test": "c8 node -r tsm --test src/**.test.ts",
+    "test": "c8 tsx --test src/**.test.ts",
     "build": "tsc --build tsconfig.build.json",
     "ts:check": "tsc --noEmit",
     "prepare": "husky install",
@@ -43,7 +43,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.0.2",
     "prettier": "^3.0.3",
-    "tsm": "^2.3.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "lint-staged": {
