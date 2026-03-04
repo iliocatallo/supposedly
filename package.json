@@ -10,9 +10,8 @@
     "/dist"
   ],
   "scripts": {
-    "pretest": "tsc --noEmit",
     "test": "c8 tsx --test-reporter dot --test src/**.test.ts",
-    "build": "tsc --build tsconfig.build.json",
+    "build": "tsc",
     "prepare": "husky install"
   },
   "repository": {
