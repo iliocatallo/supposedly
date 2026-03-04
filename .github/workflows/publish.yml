@@ -1,5 +1,9 @@
 name: Publish NPM package
 
+permissions:
+  id-token: write
+  contents: read
+
 on:
   release:
     types: [published]
@@ -27,11 +31,7 @@ jobs:
       - name: Publish
         if: '!github.event.release.prerelease'
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish PRERELEASE
         if: 'github.event.release.prerelease'
         run: npm publish --access public --tag next
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
