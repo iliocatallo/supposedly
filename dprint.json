@@ -1,0 +1,13 @@
+{
+  "typescript": {
+    "lineWidth": 120,
+    "quoteStyle": "preferSingle",
+    "semiColons": "asi"
+  },
+  "excludes": [
+    "**/node_modules"
+  ],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.95.15.wasm"
+  ]
+}
